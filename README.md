@@ -36,3 +36,39 @@ o bien sin pasar OJO: SIEMPRE DEFINIENDO VALOR AL PARAMETRO
 
 
 ## archivos estaticos
+- css,js, imgs --> carpetas
+- ahi irian las respectivas cosas
+
+## jinja 2
+- 
+
+## plantilla
+- favicon --> va en el head
+-  para pasar variables al html al hacer el render template debemos definir  var1=var2 siendo:
+	- var1: como nos refererimos a la var2 en el html
+	- var2: trabajo sobre python
+- la var1 para ser leida gracias jinja2 es por medio de:
+	- {{var1}}
+		- { % accion o condicion % } { % endPalabraReservadaUsada(for,if,etc) % } --> se emplea para condiciones o ciclos
+- "url_for('directorioAlqueApunto', filename='ruta del archivo')" --> sirve para que nos perdamos con los directorios  **tambien sirve para apuntar funciones**
+- podemos declarar bloques (plantilla base) de la siguiente forma:
+	- crears una clase base.html que contenga lo que repetis siempre
+````
+{% block content%}
+
+{% endblock %}
+````
+````
+{% extends "base.html"&} --> con esto nos devuelve lo que tenemos en base.html
+{% block content%}
+
+<h1>holis</h1> --> devuelve holis en la pantalla principal
+
+{%endblock%}
+````
+
+## Formularios
+- decorador recibe los metodos get y post
+- se usa request el cual sirve:
+	- para saber si es metodo post (con un `if request.method =="Post")
+	- o metodo get
