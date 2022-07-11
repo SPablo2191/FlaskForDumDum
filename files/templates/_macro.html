@@ -1,0 +1,11 @@
+{% macro mostrar(lista) %}
+    {%for item in lista%}
+        <p>{{item}}</p>
+    {%endfor%}
+{% endmacro %}
+
+{% macro render_field(campo)  %}
+    <td>{{campo.label}}</td>
+    <!-- con esto se crea el espacio de texto -->
+    <dd>{{ campo(**kwargs)|safe }}</dd>
+{% endmacro %}

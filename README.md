@@ -52,9 +52,9 @@ o bien sin pasar OJO: SIEMPRE DEFINIENDO VALOR AL PARAMETRO
 ## archivos estaticos
 - css,js, imgs --> carpetas
 - ahi irian las respectivas cosas
+- para scripts imagenes o estilo, en el href pongo "{{   url_for('nombreDeCarpeta',filename="nombreDelArchivo(ruta relativa)")  }}"
 
-## jinja 2
-- 
+
 
 ## plantilla
 - favicon --> va en el head
@@ -72,7 +72,7 @@ o bien sin pasar OJO: SIEMPRE DEFINIENDO VALOR AL PARAMETRO
 - flask trabaja con jinja2 es un motor de manejo de plantillas.
 - si trabajara con otra carpeta que no tenga el nombre template de beria poner:
 	- `app = Flask(__name__,template_folder="templates")`
-- para hacer ciclos o if son por ejemplo seria:
+- para hacer ciclos o if usamos los conocidos como **tags** por ejemplo seria:
 ```
 <!-- ciclo -->
 {% for item in lista %}
@@ -116,9 +116,48 @@ las plantillas que hereden seguiran la siguiente estructura:
 {%endblock%}
 ````
  
+## macro
+- crear funciones que se llamen y que traigan un html
+- se sugiere _macro.html
+```
+{%macro funcion()%}
+<!-- lo que se me cante -->
+{%endmacro%}
 
+
+<!-- en la plantilla que quiero que use la funcion -->
+
+{% from "_macro.html" import mostrar %}
+
+{{ mostrar(lista) }}
+
+```
 ## Formularios
 - decorador recibe los metodos get y post
+- permite trabajar con objetos de python usando wtforms
+	- permite que cada objeto trabajado en python sea un elemento del formulario
+		- atributo de la clase --> campo del formulario
+	- creando un archivo para los formularios, solo resta ir creando clases en funcion del formulario que necesites, esos los traes a la funcion del decorador que quieras, y en la plantilla que traes tienes que usar una funcion en macro
+```
+{%macro render_field(campo)%}
+
+<td>{{campo.label}}</td>
+
+<dd>{{ campo(**kwargs)|safe }}</dd>
+
+{%endmacro%}
+
+{%from "_macro.html" import render_field%}
+
+
+
+<form action="">
+
+{{render_field(form.username)}} --> tambien se le puede pasar clases
+
+</form>
+
+```
 - se usa request el cual sirve:
 	- para saber si es metodo post (con un `if request.method =="Post")
 	- o metodo get

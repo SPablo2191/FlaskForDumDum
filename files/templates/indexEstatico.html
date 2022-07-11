@@ -1,12 +1,17 @@
 {%extends "base.html"%}
+    {%block titulo%}
+        FlaskSite
+    {%endblock%}
     {%block content%}
+    <!-- lo que se me cante -->
         <div class="container">
-            <h2>hola!</h2>
+            <h2>BIenvenido al curso de flask!</h2>
+            <!-- en la plantilla que quiero que use la funcion -->
+            {% from "_macro.html" import mostrar %}
+                {{ mostrar(lista) }}
+
+            <div class="row">
+                <p class="copyright text-muted">&copy; Pablo Sandoval</p>
+            </div>
         </div>
-
-
-
-
-
-        
     {%endblock%}
