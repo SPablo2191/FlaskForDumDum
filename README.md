@@ -28,12 +28,26 @@ me devuelve error
 - necesitamos rutas duraderas
 - cada ruta se destaca por un decorador, y tiene una funcion con un nombre que la refiera
 - podes pasar como parametro variables, <string:user> es un ejemplo de pasar cadena de caracteres
-- mini tip de python: en una cadena poniendo  varios {}  y despues usando .format(var1,var2,etc) carga esas variables
+- mini tip de python: en una cadena poniendo  varios {}  y despues usando **.format(var1,var2,etc)** carga esas variables
 - podes hacer pasaje de parametros de: [int,string,float]
 - respetar flotantes como 1.0, no toma 1
 - valores por defecto: solo tenemos que poner mas de un decorador, con la misma ruta pero pasando otros parametros
 o bien sin pasar OJO: SIEMPRE DEFINIENDO VALOR AL PARAMETRO 
 
+### rutas de pildoras
+ - **nunca** debo reescribir el mismo metodo (cada decorador tendra su propia y unica funcion)
+ - una ruta puede recibir **parametros** de distintas formas:
+	 - /params? --> en ocasiones se trabaja con estos parametros; empleando desde la libreria flask **request** , y esto se logra:
+		 - param = request.args.get('llave del valor del parametro a pasar', 'valor por defecto en caso de que no se pase parametro')
+		 - asi cuando se accede a esa direccion retorne alguna de las dos opciones
+		 - la llave sigue el mismo principio que *los diccionarios de python* 
+		 - http://127.0.0.1:8000/params?parametro=pablo --> retornara pablo
+		 - http://127.0.0.1:8000/params --> retornara valor por defecto
+	 - parametros sin signo de interrogacion: 
+		 - params/name siendo name un parametro que se define en la url; a su vez puedo añadir un decorador sin parametro en caso de que no envie un valor (**eso si, los parametros de la funcion deben tener un valor por default**)
+		 - por default los parametros de la url son **string**
+		 - <int: parametro> --> es entero
+		 - 
 
 ## archivos estaticos
 - css,js, imgs --> carpetas
@@ -51,14 +65,49 @@ o bien sin pasar OJO: SIEMPRE DEFINIENDO VALOR AL PARAMETRO
 	- {{var1}}
 		- { % accion o condicion % } { % endPalabraReservadaUsada(for,if,etc) % } --> se emplea para condiciones o ciclos
 - "url_for('directorioAlqueApunto', filename='ruta del archivo')" --> sirve para que nos perdamos con los directorios  **tambien sirve para apuntar funciones**
-- podemos declarar bloques (plantilla base) de la siguiente forma:
-	- crears una clase base.html que contenga lo que repetis siempre
+- podemos declarar bloques (plantilla base)
+
+### plantillas pildoras
+- vamos a necesitar renderizar alguna plantilla
+- flask trabaja con jinja2 es un motor de manejo de plantillas.
+- si trabajara con otra carpeta que no tenga el nombre template de beria poner:
+	- `app = Flask(__name__,template_folder="templates")`
+- para hacer ciclos o if son por ejemplo seria:
+```
+<!-- ciclo -->
+{% for item in lista %}
+
+<h1>{{item}}</h1>
+
+{% endfor %}
+<!-- condicional -->
+
+{% if name=="pablo" %}
+
+<h2>holis</h2>
+
+{% else %}
+
+<h2>mi nombre es {{name}}</h2>
+
+{% endif %}
+```
+
+## herencia
+- nos permite tener control a la hora de escribir mensajes
+- con esto podemos hacer uso de bloques a nuestro antojo
+- **los bloques no necesariamente se llamaran content, puedes ponerle el nombre que quieras**
+- para no copiar lo que se repite siempre, definimos un base.html
 ````
+lo que va en base html:
 {% block content%}
 
 {% endblock %}
 ````
 ````
+las plantillas que hereden seguiran la siguiente estructura:
+
+
 {% extends "base.html"&} --> con esto nos devuelve lo que tenemos en base.html
 {% block content%}
 
@@ -66,6 +115,7 @@ o bien sin pasar OJO: SIEMPRE DEFINIENDO VALOR AL PARAMETRO
 
 {%endblock%}
 ````
+ 
 
 ## Formularios
 - decorador recibe los metodos get y post
